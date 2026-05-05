@@ -1,0 +1,32 @@
+[package]
+name = "vgc_netwatch"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "vgc_netwatch"
+path = "src/main.rs"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+opt-level = 3
+
+[dependencies]
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "fmt", "ansi", "time", "local-time"] }
+tracing-appender = "0.2"
+time = { version = "0.3", features = ["formatting", "macros", "local-offset"] }
+
+[target.'cfg(windows)'.dependencies.windows]
+version = "0.58"
+features = [
+    "Win32_Foundation",
+    "Win32_Networking_WinSock",
+    "Win32_NetworkManagement_IpHelper",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_Console",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+]
